@@ -115,7 +115,7 @@ Generated vimdoc:
 Infer a definition from annotations in lua code.
 
 ```
-#def(require("myplugin")math.add())
+#def(require("myplugin").math.add)
 ```
 
 Generated markdown:
