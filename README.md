@@ -1,4 +1,4 @@
-# vimdockery
+# nvimdockery
 
 A tool to help you write vim help doc. The syntax is inspired by typst.
 
