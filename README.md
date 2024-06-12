@@ -4,13 +4,13 @@ A tool to help you write vim help doc. The syntax is inspired by typst.
 
 ## Syntax
 
-**Paragraph**
+**Render Switch**
 
 ```
-#par(markdown-only)[
+#par(ignore-vimdoc:true)[
   this is a paragraph only appears in markdown.
 ]
-#par(vimdoc-only)[
+#par(ignore-markdown:true)[
   this is a paragraph only appears in vimdoc.
 ]
 ```
@@ -63,24 +63,24 @@ HEADER 1.1                                                *myplugin-header-1.1*
 Section 1.1.1                                          *myplugin-section-1.1.1*
 ```
 
-**Leading**
+**Indent**
 
 ```
-#set leading(8)
+#par(indent: 8)
 
-This is a paragraph with leading.
+This is a paragraph with indent.
 ```
 
 Generated markdown:
 
 ```markdown
-        This is a paragraph with leading.
+        This is a paragraph with indent.
 ```
 
 Generated vimdoc:
 
 ```vimdoc
-        This is a paragraph with leading.
+        This is a paragraph with indent.
 ```
 
 **List**
@@ -110,12 +110,15 @@ Generated vimdoc:
     - Item 2.2
 ```
 
+**table**
+
 **Definition**
 
-Infer a definition from annotations in lua code.
+Infer a definition from annotations in lua code. Annotations must start with
+three dashes `---`.
 
 ```
-#def(require("myplugin").math.add)
+#def(fun: math.add)
 ```
 
 Generated markdown:
@@ -149,6 +152,21 @@ add({left}, {right})                                       *myplugin-math.add()*
     (number) The sum of the two numbers.
 ```
 
+The definition type include
+
+- `fun` for function: `@param`, `@return`
+- `class` for class: `@class`, `@field`
+- `alias` for alias: `@alias`
+- `enum` for enum: `@enum`
+
+If there are addtional information, you can add it like this:
+
+```
+#def(fun: math.add)[
+  This is a function to add two numbers.
+]
+```
+
 **link**
 
 ```
@@ -161,3 +179,23 @@ add({left}, {right})                                       *myplugin-math.add()*
 
 If `#tag` in separate line, it will create a tag. Otherwise, it will is a
 hot-link to the tag.
+
+**table**
+
+```
+#table(
+  columns: 3,
+  table.header(["opt"], ["description"]),
+  [opt1]
+  [description1]
+  [opt2]
+  [description2]
+  [opt3]
+  [
+    description3
+    with
+    multiple
+    lines
+  ]
+)
+```
